@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeYo商城 - 商品详情</title>
+    <!-- 引入Bootstrap CSS，这里使用国内镜像源 -->
+    <!-- 引入Bootstrap CSS (国内镜像) -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引入Font Awesome用于图标 (国内镜像) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <!-- 引入自定义图标  -->
+    <link rel="stylesheet" type="text/css" href="css/moon-icon.css">
+    <!-- 引入自定义样式 -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        a:hover{
+            color: orange;
+            background-color: orange;
+        }
+        .page-banner {
+            background: rgba(0, 0, 0, 0) url(img/page-banner.jpg) no-repeat scroll center center;
+            -webkit-background-size: cover;
+            background-size: cover;
+            padding: 143px 0;
+        }
+        .text-center {
+            text-align: center;
+        }
+        /* 自定义样式 */
+        .product-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-details {
+            margin-left: 20px;
+        }
+
+        p, label {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<!--导航栏顶部-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">登录</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">|</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="register.html">注册</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">语言</a>
+                <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                    <a class="dropdown-item" href="#">中文</a>
+                    <a class="dropdown-item" href="#">English</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="currencyDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">货币</a>
+                <div class="dropdown-menu" aria-labelledby="currencyDropdown">
+                    <a class="dropdown-item" href="#">CNY</a>
+                    <a class="dropdown-item" href="#">USD</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--导航栏底部-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;font-size: 18px">
+    <div class="container">
+        <div class="logo col-md-2 col-sm-4 col-xs-5"><a href="index.html"><img src="img/logo.png" alt="logo" /></a></div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">首页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="shop.html">商品</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    我的
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="cart.html">我的购物车</a>
+                    <a class="dropdown-item" href="orders.html">我的订单</a>
+                    <a class="dropdown-item" href="my-profile.html">个人信息</a>
+                    <a class="dropdown-item" href="password.html">密码修改</a>
+                    <a class="dropdown-item" href="login.html">登录</a>
+                    <a class="dropdown-item" href="register.html">注册</a>
+                    <a class="dropdown-item" href="product-detail.html">商品详情</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="blog.html">博客</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contack.html">联系</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+        </form>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="mo-cart"></i> <span
+                        class="badge badge-pill badge-danger">3</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--banner区域-->
+<div class="page-banner text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="color: white">商品详情</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!--商品详情区域-->
+<div class="container" style="margin-top: 40px">
+    <div class="row">
+        <div class="col-md-6" style="border: 1px orange solid">
+            <!-- 商品大图展示 -->
+            <img src="img/pro-details/5.jpg" alt="商品图片" class="product-image">
+        </div>
+        <div class="col-md-6">
+            <!-- 商品详细信息展示 -->
+            <div class="product-details">
+                <h2>夏季休闲小白鞋</h2>
+                <p>商品分类:鞋子 <p>
+                <p>商品描述: <span>板鞋/男鞋/厚底</span></p>
+                <p>库存数量: <span>100</span></p>
+                <p>原价: <span>¥209</span></p>
+                <p>现价: <span>¥159</span></p>
+
+                <!-- 选择颜色和尺寸 -->
+                <div>
+                    <label>选择颜色:</label>
+                    <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="options" id="option1" autocomplete="off" checked> 绿色
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> 白色
+                        </label>
+						<label class="btn btn-secondary">
+						    <input type="radio" name="options" id="option2" autocomplete="off"> 黑色
+						</label>
+                    </div>
+                </div>
+                <div>
+                    <label>选择尺寸:</label>
+                    <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="size" id="size1" autocomplete="off" checked> 39
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="size" id="size2" autocomplete="off"> 40
+                        </label>
+						<label class="btn btn-secondary">
+						    <input type="radio" name="size" id="size2" autocomplete="off"> 41
+						</label>
+						<label class="btn btn-secondary">
+						    <input type="radio" name="size" id="size2" autocomplete="off"> 42
+						</label>
+						<label class="btn btn-secondary">
+						    <input type="radio" name="size" id="size2" autocomplete="off"> 43
+						</label>
+						<label class="btn btn-secondary">
+						    <input type="radio" name="size" id="size2" autocomplete="off"> 44
+						</label>
+                    </div>
+                </div>
+
+                <!-- 购买数量 -->
+                <label>购买数量:</label>
+                <input type="number" value="1" min="1">
+
+                <!-- 加入购物车按钮 -->
+                <button type="button" class="btn btn-primary">加入购物车</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--商品评价区域-->
+<div class="container" style="margin-top: 50px">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#description">产品描述</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#hot">热门</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#reviews">评价</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="description" class="container tab-pane active">
+            <h3>产品描述</h3>
+			<br />
+            <p>这双鞋子设计简约大方，线条流畅，无论是搭配休闲装还是运动装都显得非常时尚。
+			鞋面采用了高品质的网面材质，轻盈透气，穿着起来非常舒适。鞋底采用了高弹性的橡胶材质，
+			具有很好的耐磨性和抗滑性，可以让我在运动时更加自如。</p>
+        </div>
+        <div id="hot" class="container tab-pane fade">
+            <h3>热门</h3>
+			<br />
+            <p>男子板鞋热销榜第2名</p>
+        </div>
+        <div id="reviews" class="container tab-pane fade">
+            <h3>评价</h3>
+			<br />
+            <div class="media">
+                <img src="img/comments/3.png" alt="用户头像" class="mr-3 rounded-circle" width="50">
+                <div class="media-body">
+                    <h5 class="mt-0">用户名_84480072</h5>
+                    <p>经典百搭小白鞋，脚感舒适，很喜欢！</p>
+                </div>
+            </div>
+            <div class="media">
+                <img src="img/comments/4.png" alt="用户头像" class="mr-3 rounded-circle" width="50">
+                <div class="media-body">
+                    <h5 class="mt-0">用户名_1514464</h5>
+                    <p>鞋子收到了，很好看穿着很白搭，穿着也很舒服，走路没有很累的感觉，很适合学生党，推荐。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<!--底部区域-->
+<div class="footer-area">
+    <style>.ftbox { display: flex; justify-content: space-between;}</style>
+	<!-- Footer Top -->
+	<div class="footer-top";">
+		<div class="container">
+			<div class="row ftbox">
+				<!-- Footer Widget About -->
+				<div class="footer-widget footer-widget-about col-md-3 col-sm-5">
+					<img src="img/footer-logo.png" alt="" />
+					<br />
+					<a>一个专注购物于一体，争当做国内一线品牌的购物网站。</a>
+					<br />
+					<br />
+					<br />
+					<div class="footer-social">
+						<a href="#"><i class="mo-facebook"></i></a>
+						<a href="#"><i class="mo-twitter"></i></a>
+						<a href="#"><i class="mo-google-plus"></i></a>
+					</div>
+				</div>
+				<!-- Footer Widget Address -->
+				<div class="footer-widget footer-widget-address col-md-2 col-md-offset-1 col-sm-5 col-sm-offset-2">
+					<h3>联系地址</h3>
+					<a>410000 长沙, <br />CN 95580, 中国<br /></a>
+					<a> 123-456-7890</a>
+					<a>sales@VeYo.com</a>
+				</div>
+				<!-- Footer Widget Collection -->
+				<div class="footer-widget footer-widget-collection col-md-2 col-md-offset-1 col-sm-5">
+					<h3>分类</h3>
+					<ul>
+						<li><a href="#">男装</a></li>
+						<li><a href="#">女装</a></li>
+						<li><a href="#">童装</a></li>
+						<li><a href="#">系列</a></li>
+						<li><a href="#">在售</a></li>
+						<li><a href="#">上新</a></li>
+					</ul>
+				</div>
+				<!-- Footer Widget Shop -->
+				<div class="footer-widget footer-widget-shop col-md-2 col-md-offset-1 col-sm-5 col-sm-offset-2">
+					<h3>购物</h3>
+					<ul>
+						<li><a href="single-page.html">关于我们</a></li>
+						<li><a href="single-page.html">运输方式</a></li>
+						<li><a href="single-page.html">生涯</a></li>
+						<li><a href="contact.html">联系</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Bottom -->
+	<div class="footer-bottom" style="height: 73px">
+		<div class="container">
+			<div class="row">
+				<!-- Footer Copyright -->
+				<div class="copyright col-sm-6 text-left"><p>&copy; 2024 <a href="#">VeYo</a>. All Rights Reserved</p></div>
+				<!-- Footer Payment -->
+				<div class="payment col-sm-6 text-right"><img src="img/payment.png" alt="payment" /></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 引入jQuery (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 引入Popper.js (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<!-- 引入Bootstrap JS (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

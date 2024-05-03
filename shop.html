@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeYo商城</title>
+
+  <!-- 引入Bootstrap CSS (国内镜像) -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- 引入Font Awesome用于图标 (国内镜像) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  
+  <!-- 引入自定义图标  -->
+  <link rel="stylesheet" type="text/css" href="css/moon-icon.css">
+  <!-- 引入自定义样式 -->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <style>
+    a:hover{
+      color: orange;
+      background-color: orange;
+    }
+    .page-banner {
+      background: rgba(0, 0, 0, 0) url(img/page-banner.jpg) no-repeat scroll center center;
+      -webkit-background-size: cover;
+      background-size: cover;
+      padding: 143px 0;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .filter {
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    .product-list {
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    .product {
+      margin-bottom: 20px;
+    }
+    .pagination {
+      justify-content: center;
+    }
+    .product img {
+      transition: transform 0.3s;
+    }
+    .product .cart, .product .details {
+      display: none;
+    }
+    .product:hover .cart, .product:hover .details {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+<!--导航栏顶部-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">登录</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">|</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="register.html">注册</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">语言</a>
+        <div class="dropdown-menu" aria-labelledby="languageDropdown">
+          <a class="dropdown-item" href="#">中文</a>
+          <a class="dropdown-item" href="#">English</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="currencyDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">货币</a>
+        <div class="dropdown-menu" aria-labelledby="currencyDropdown">
+          <a class="dropdown-item" href="#">CNY</a>
+          <a class="dropdown-item" href="#">USD</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--导航栏底部-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;font-size: 18px">
+  <div class="container">
+    <div class="logo col-md-2 col-sm-4 col-xs-5"><a href="index.html"><img src="img/logo.png" alt="logo" /></a></div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">首页</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="shop.html">商品</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          我的
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="cart.html">我的购物车</a>
+          <a class="dropdown-item" href="orders.html">我的订单</a>
+          <a class="dropdown-item" href="my-profile.html">个人信息</a>
+          <a class="dropdown-item" href="password.html">密码修改</a>
+          <a class="dropdown-item" href="login.html">登录</a>
+          <a class="dropdown-item" href="register.html">注册</a>
+          <a class="dropdown-item" href="product-detail.html">商品详情</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="blog.html">博客</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contack.html">联系</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+    </form>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="mo-cart"></i> <span
+                class="badge badge-pill badge-danger">3</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--banner区域-->
+<div class="page-banner text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1 style="color: white">商品列表</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!--商品区域-->
+<!--
+栅格实现一个VeYo商城的商城页面，页面左侧包括搜索框、分类搜索、价格区间、颜色、尺寸、品牌；
+页面右侧展示商品列表，每行显示三个商品（包括商品图片、名称、价格，鼠标经过放大图片，鼠标经过显示购物车图标、查看详情图标），
+提供分页条
+-->
+<div class="container" style="margin-top: 50px">
+  <div class="row">
+    <!--侧边栏区域-->
+    <div class="col-md-3 filter">
+      <form>
+        <!--搜索-->
+        <div class="sin-shop-sidebar">
+          <label for="search">搜索</label>
+          <input type="text" class="form-control" id="search" placeholder="请输入商品名称">
+        </div>
+        <!--分类-->
+        <div class="sin-shop-sidebar">
+          <label for="category">分类</label>
+          <select class="form-control" id="category">
+			<option>全部</option>
+            <option>衣服</option>
+			<option>裤子</option>
+            <option>鞋子</option>
+            <option>配饰</option>
+          </select>
+        </div>
+        <!--价格-->
+        <div class="sin-shop-sidebar">
+          <label for="priceRange">价格区间</label>
+          <input type="range" class="form-control-range" id="priceRange" min="0" max="10000" step="100">
+        </div>
+        <!--颜色-->
+        <div class="sin-shop-sidebar">
+          <div class="title fix">
+            <h4>颜色</h4>
+            <a href="#">更多</a>
+          </div>
+          <!-- Product Color -->
+          <div class="product-color">
+            <ul>
+              <li><a href="#"><span class="color color-black"></span> 黑色</a></li>
+              <li><a href="#"><span class="color color-pink"></span> 粉色</a></li>
+              <li><a href="#"><span class="color color-blue"></span> 蓝色</a></li>
+              <li><a href="#"><span class="color color-gold"></span> 金色</a></li>
+              <li><a href="#"><span class="color color-brown"></span> 褐色</a></li>
+              <li><a href="#"><span class="color color-purple"></span> 紫色</a></li>
+              <li><a href="#"><span class="color color-green"></span> 绿色</a></li>
+              <li><a href="#"><span class="color color-red"></span> 红色</a></li>
+              <li><a href="#"><span class="color color-orange"></span> 橘色</a></li>
+              <li><a href="#"><span class="color color-white"></span> 白色</a></li>
+            </ul>
+          </div>
+        </div>
+        <!--尺寸-->
+        <div class="sin-shop-sidebar">
+          <div class="title fix">
+            <h4>服装尺寸</h4>
+            <a href="#">更多</a>
+          </div>
+          <!-- Product Size -->
+          <div class="product-sizes">
+            <ul>
+              <li><a href="#">s</a></li>
+              <li><a href="#">m</a></li>
+              <li><a href="#">l</a></li>
+              <li><a href="#">xl</a></li>
+              <li><a href="#">xxl</a></li>
+            </ul>
+          </div>
+        </div>
+        <!--品牌-->
+        <div class="sin-shop-sidebar">
+          <div class="title fix">
+            <h4>品牌</h4>
+            <a href="#">更多</a>
+          </div>
+          <!-- Product Brands -->
+          <div class="product-brand" tabindex="0" style="overflow: hidden; outline: none;">
+            <ul>
+              <li><a href="#">罗森</a></li>
+              <li><a href="#">花花公子</a></li>
+              <li><a href="#">荣马</a></li>
+              <li><a href="#">卡拉美拉</a></li>
+              <li><a href="#">阿迪达斯</a></li>
+              <li><a href="#">古驰</a></li>
+              <li><a href="#">大众</a></li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--商品列表区域-->
+    <div class="col-md-9 product-list">
+      <div class="shop-top-toolbar">
+        <ul class="view-mode float-left">
+          <li class="active"><a href="#grid-view" data-toggle="tab">共有10086条记录</a></li>
+        </ul>
+        <p class="float-right"></p>
+      </div>
+      <div class="row">
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/1.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/1.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">衬衫</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/2.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/2.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">长裙</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/3.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/3.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">连衣裙</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/4.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/4.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">裤子</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/5.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/5.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">裤子</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/6.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/6.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">玩偶</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">配饰</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/7.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/7.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">衬衫</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">服装</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/8.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/8.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">登山帽</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">配饰</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 商品1 -->
+        <div class="col-md-4 product">
+          <div class="sin-product">
+            <!-- 商品图片 -->
+            <div class="pro-image">
+              <a href="#"><img src="img/blog2/9.png" alt="product"></a>
+              <!-- 鼠标覆盖 -->
+              <div class="pro-hover fix" style="background-image: url('img/blog2/9.png');width: 251.13px">
+                <!-- 购物车、查看、收藏按钮 -->
+                <div class="pro-hover-action animated text-center">
+                  <button class="add-cart pro-action"><i class="mo-cart"></i></button>
+                  <a href="#quick-view" class="quick-view pro-action" data-toggle="modal"><i class="mo-eye"></i></a>
+                  <button class="wishlist pro-action"><i class="mo-heart"></i></button>
+                </div>
+                <!-- 颜色、尺寸选项 -->
+                <div class="pro-hover-option" style="width: 251.13px">
+                  <!--尺寸选项 -->
+                  <div class="pro-size fix">
+                    <h4>Sizes:</h4>
+                    <ul>
+                      <li>s</li>
+                      <li>xs</li>
+                      <li>m</li>
+                      <li>l</li>
+                      <li>xl</li>
+                      <li>xxl</li>
+                    </ul>
+                  </div>
+                  <!-- 颜色 -->
+                  <div class="pro-color fix">
+                    <h4>Colors:</h4>
+                    <ul>
+                      <li class="blue">b</li>
+                      <li class="orange">o</li>
+                      <li class="green">g</li>
+                      <li class="purple">p</li>
+                      <li class="pink">p</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 商品介绍 -->
+            <div class="pro-content">
+              <div class="top fix">
+                <h3><a href="#">口红</a></h3>
+                <p class="price float-right">￥ 256</p>
+              </div>
+              <div class="bottom fix">
+                <a href="#" class="pro-cat float-left">化妆品</a>
+                <div class="ratting float-right">
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star active"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                  <i class="mo-star star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 分页条 -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<!--底部区域-->
+<div class="footer-area">
+  <style>.ftbox { display: flex; justify-content: space-between;}</style>
+<!-- Footer Top -->
+<div class="footer-top";">
+  <div class="container">
+    <div class="row ftbox">
+      <!-- Footer Widget About -->
+      <div class="footer-widget footer-widget-about col-md-3 col-sm-5">
+        <img src="img/footer-logo.png" alt="" />
+        <p>一个专注购物于一体，争当做国内一线品牌的购物网站。</p>
+        <div class="footer-social">
+          <a href="#"><i class="mo-facebook"></i></a>
+          <a href="#"><i class="mo-twitter"></i></a>
+          <a href="#"><i class="mo-google-plus"></i></a>
+        </div>
+      </div>
+      <!-- Footer Widget Address -->
+      <div class="footer-widget footer-widget-address col-md-2 col-md-offset-1 col-sm-5 col-sm-offset-2">
+        <h3>联系地址</h3>
+        <p>410000 长沙, <br />CN 95580, 中国</p>
+        <p> 123-456-7890</p>
+        <p>sales@VeYo.com</p>
+      </div>
+      <!-- Footer Widget Collection -->
+      <div class="footer-widget footer-widget-collection col-md-2 col-md-offset-1 col-sm-5">
+        <h3>分类</h3>
+        <ul>
+          <li><a href="#">男装</a></li>
+          <li><a href="#">女装</a></li>
+          <li><a href="#">童装</a></li>
+          <li><a href="#">系列</a></li>
+          <li><a href="#">在售</a></li>
+          <li><a href="#">上新</a></li>
+        </ul>
+      </div>
+      <!-- Footer Widget Shop -->
+      <div class="footer-widget footer-widget-shop col-md-2 col-md-offset-1 col-sm-5 col-sm-offset-2">
+        <h3>购物</h3>
+        <ul>
+          <li><a href="single-page.html">关于我们</a></li>
+          <li><a href="single-page.html">运输方式</a></li>
+          <li><a href="single-page.html">生涯</a></li>
+          <li><a href="contact.html">联系</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer Bottom -->
+<div class="footer-bottom">
+  <div class="container">
+    <div class="row">
+      <!-- Footer Copyright -->
+      <div class="copyright col-sm-6 text-left"><p>&copy; 2024 <a href="#">VeYo</a>. All Rights Reserved</p></div>
+      <!-- Footer Payment -->
+      <div class="payment col-sm-6 text-right"><img src="img/payment.png" alt="payment" /></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 引入jQuery (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 引入Popper.js (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<!-- 引入Bootstrap JS (国内镜像) -->
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
